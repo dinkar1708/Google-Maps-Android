@@ -1,4 +1,7 @@
 # Google-Maps-Android
+## If you dont have time just take - RealLocationComponent.kt and use in you project
+## Make sure to take the permissions and RealLocationComponent.kt should be able to find the location.
+
 # Reference - 
 https://developers.google.com/maps/documentation/android-api/start
 # Google map version 2 API demo.
@@ -17,13 +20,10 @@ Steps to develope demo -
 
 ![api_key2](https://user-images.githubusercontent.com/28217318/35284218-3af40b7e-0080-11e8-8712-b89e948b934d.PNG)
 
-![api_key3](https://user-images.githubusercontent.com/28217318/35284224-3e9fcdee-0080-11e8-9211-a060556c77b2.PNG)
-
-
 # App screen shot - 
-![device-2018-01-23-204324](https://user-images.githubusercontent.com/28217318/35283844-4a2fd07e-007f-11e8-82ae-aeceaeb84aaa.png)
 
+![device-2019-09-26-222741](https://user-images.githubusercontent.com/14831652/65692735-10a9b700-e0ae-11e9-911e-2c74f3b24d23.png)
 
+![device-2019-09-26-222826](https://user-images.githubusercontent.com/14831652/65692737-10a9b700-e0ae-11e9-86ec-7dd585fd3dbf.png)
 
-
-
+![device-2019-09-26-222907](https://user-images.githubusercontent.com/14831652/65692740-11424d80-e0ae-11e9-8d6f-d4d65b26f5ca.png)
