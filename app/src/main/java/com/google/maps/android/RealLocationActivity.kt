@@ -11,34 +11,20 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import com.google.android.material.snackbar.Snackbar
-import androidx.core.app.ActivityCompat
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.location.LocationSettingsResponse
-import com.google.android.gms.location.LocationSettingsStatusCodes
-import com.google.android.gms.location.SettingsClient
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
-
+import com.google.android.gms.location.*
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_real_location.*
 import java.text.DateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 
 /**
@@ -118,17 +104,17 @@ class RealLocationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_real_location)
 
         // Locate the UI widgets.
-        mStartUpdatesButton = findViewById<Button>(R.id.start_updates_button)
+        mStartUpdatesButton = findViewById(R.id.start_updates_button)
         mStartUpdatesButton.setOnClickListener {
             startLocationUpdates()
         }
-        mStopUpdatesButton = findViewById<Button>(R.id.stop_updates_button)
+        mStopUpdatesButton = findViewById(R.id.stop_updates_button)
         mStopUpdatesButton.setOnClickListener {
             stopLocationUpdates()
         }
-        mLatitudeTextView = findViewById<TextView>(R.id.latitude_text)
-        mLongitudeTextView = findViewById<TextView>(R.id.longitude_text)
-        mLastUpdateTimeTextView = findViewById<TextView>(R.id.last_update_time_text)
+        mLatitudeTextView = findViewById(R.id.latitude_text)
+        mLongitudeTextView = findViewById(R.id.longitude_text)
+        mLastUpdateTimeTextView = findViewById(R.id.last_update_time_text)
 
         // Set labels.
         mLatitudeLabel = resources.getString(R.string.latitude_label)
@@ -150,7 +136,15 @@ class RealLocationActivity : AppCompatActivity() {
         createLocationRequest()
         buildLocationSettingsRequest()
 
-        findViewById<View>(R.id.map_btn).setOnClickListener { startActivity(Intent(this@RealLocationActivity, MapsActivity::class.java)) }
+        map_btn.setOnClickListener {
+            startActivity(Intent(this@RealLocationActivity, MapsActivity::class.java))
+            finish()
+        }
+
+        component_demo.setOnClickListener {
+            startActivity(Intent(this, LocationComponentActivity::class.java))
+            finish()
+        }
     }
 
     /**
@@ -260,7 +254,6 @@ class RealLocationActivity : AppCompatActivity() {
      */
     fun startUpdatesButtonHandler(view: View?) {
         mRequestingLocationUpdates = true
-        setButtonsEnabledState()
         startLocationUpdates()
     }
 
@@ -278,7 +271,6 @@ class RealLocationActivity : AppCompatActivity() {
      * Requests location updates from the FusedLocationApi. Note: we don't call this unless location
      * runtime permission has been granted.
      */
-    @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
         // Begin by checking if the device has the necessary location settings.
         mSettingsClient!!.checkLocationSettings(mLocationSettingsRequest)
@@ -321,19 +313,7 @@ class RealLocationActivity : AppCompatActivity() {
      * Updates all UI fields.
      */
     private fun updateUI() {
-        setButtonsEnabledState()
         updateLocationUI()
-    }
-
-    /**
-     * Disables both buttons when functionality is disabled due to insuffucient location settings.
-     * Otherwise ensures that only one button is enabled at any time. The Start Updates button is
-     * enabled if the user is not requesting location updates. The Stop Updates button is enabled
-     * if the user is requesting location updates.
-     */
-    private fun setButtonsEnabledState() {
-//        mStartUpdatesButton.isEnabled = !mRequestingLocationUpdates;
-//        mStopUpdatesButton.isEnabled = !mRequestingLocationUpdates;
     }
 
     /**
@@ -366,7 +346,6 @@ class RealLocationActivity : AppCompatActivity() {
         mFusedLocationClient?.removeLocationUpdates(mLocationCallback!!)
                 ?.addOnCompleteListener(this) {
                     mRequestingLocationUpdates = false
-                    setButtonsEnabledState()
                 }
     }
 
@@ -385,18 +364,11 @@ class RealLocationActivity : AppCompatActivity() {
         startUpdatesButtonHandler(null)
     }
 
-    override fun onPause() {
-        super.onPause()
-
-        // Remove location updates to save battery.
-//        stopLocationUpdates()
-    }
-
     /**
      * Stores activity data in the Bundle.
      */
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
-        savedInstanceState.putBoolean(KEY_REQUESTING_LOCATION_UPDATES, mRequestingLocationUpdates!!)
+        savedInstanceState.putBoolean(KEY_REQUESTING_LOCATION_UPDATES, mRequestingLocationUpdates)
         savedInstanceState.putParcelable(KEY_LOCATION, mCurrentLocation)
         savedInstanceState.putString(KEY_LAST_UPDATED_TIME_STRING, mLastUpdateTime)
         super.onSaveInstanceState(savedInstanceState)
@@ -465,7 +437,7 @@ class RealLocationActivity : AppCompatActivity() {
                 // receive empty arrays.
                 Log.i(TAG, "User interaction was cancelled.")
             } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (mRequestingLocationUpdates!!) {
+                if (mRequestingLocationUpdates) {
                     Log.i(TAG, "Permission granted, updates requested, starting location updates")
                     startLocationUpdates()
                 }

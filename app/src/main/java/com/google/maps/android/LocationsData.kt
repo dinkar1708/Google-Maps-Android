@@ -3,9 +3,7 @@ package com.google.maps.android
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-
-import java.lang.reflect.Array
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by dinakar.maurya on 23-01-2018.
@@ -26,19 +24,19 @@ class LocationsData {
         //hard coded data, can be change dynamically
         val data: ArrayList<LocationsData>
             get() {
-                val first = LatLng(28.6164, 77.3725)
-                val second = LatLng(28.5672, 77.3261)
-                val third = LatLng(28.4649, 77.5113)
-                val fourth = LatLng(28.5665, 77.3406)
+                val first = LatLng(35.011665, 135.768326)
+                val second = LatLng(34.689999, 135.195557)
+                val third = LatLng(33.583332, 130.399994)
+                val fourth = LatLng(34.383331, 132.449997)
 
 
                 val bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.mipmap.marker)
                 val bitmapDescriptor2 = BitmapDescriptorFactory.fromResource(R.mipmap.marker2)
 
-                val title = "Fortis Hospital, Noida, Uttar Pradesh, India"
-                val title2 = "The Great India Place Mall, Noida, Uttar Pradesh, India"
-                val title3 = "Pari Chowk, NRI City, Greater Noida, Uttar Pradesh 201310, India"
-                val title4 = "Arun Vihar, Sector 37, Noida, Uttar Pradesh 201303, India"
+                val title = "Kyoto, Kyoto Prefecture"
+                val title2 = "Kobe, Hyogo"
+                val title3 = "Fukuoka, Fukuoka"
+                val title4 = "Hiroshima, Hirosima Prefecture"
 
                 val datas = ArrayList<LocationsData>()
 

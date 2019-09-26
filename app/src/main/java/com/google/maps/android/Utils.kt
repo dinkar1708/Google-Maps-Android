@@ -3,8 +3,6 @@ package com.google.maps.android
 import android.content.Context
 import android.location.LocationManager
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
-import android.nfc.Tag
 import android.util.Log
 
 /**
@@ -22,9 +20,7 @@ object Utils {
      * @return
      */
     fun isConnectedToInternet(context: Context): Boolean {
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        val activeNetwork = cm.activeNetworkInfo
+        val activeNetwork = (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
         val isConnected = activeNetwork != null && activeNetwork.isConnected
         Log.i(TAG, " isConnectedToInternet $isConnected")
         return isConnected

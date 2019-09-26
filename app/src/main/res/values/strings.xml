@@ -17,5 +17,10 @@
     <string name="permission_denied_explanation">Permission was denied, but is needed for core
         functionality.</string>
     <string name="settings">Settings</string>
+    <string name="open_map">Open Map</string>
+    <string name="last_update_time">Last update time</string>
+    <string name="longitude">longitude</string>
+    <string name="latitude">latitude</string>
+    <string name="componentdemo">ComponentDemo</string>
 
 </resources>
